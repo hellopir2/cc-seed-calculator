@@ -1,6 +1,7 @@
 <html><head><title>seed transfer calculator
 </title></head><body><style>label{padding:10px;}</style><label for="start">start</label><input id="start"><br><label for="end">end</label><input id="end"><br><label for="clone">clone id</label><input id="clone" type="number"><br>
-<button onclick="routeSeed(start.value,end.value,parseInt(clone.value))">generate magic numbers</button><br>
+<label for="minimum">min</label><input id="minimum" type="number" placeholder="optional"><br>
+<button onclick="routeSeed(start.value,end.value,parseInt(clone.value),parseInt(minimum.value))">generate magic numbers</button><br>
 <p id="out"></p><script>(function(a,b,c,d,e,f){
     function k(a){var b,c=a.length,e=this,f=0,g=e.i=e.j=0,h=e.S=[];for(c||(a=[c++]);d>f;)h[f]=f++;for(f=0;d>f;f++)h[f]=h[g=j&g+a[f%c]+(b=h[f])],h[g]=b;(e.g=function(a){for(var b,c=0,f=e.i,g=e.j,h=e.S;a--;)b=h[f=j&f+1],c=c*d+h[j&(h[f]=h[g=j&g+b])+(h[g]=b)];return e.i=f,e.j=g,c})(d)}
     function l(a,b){var e,c=[],d=(typeof a)[0];if(b&&"o"==d)for(e in a)try{c.push(l(a[e],b-1))}catch(f){}return c.length?c:"s"==d?a:a+"\0"}
@@ -36,8 +37,9 @@ function makeseed(i, id) {
     }
     return str;
 }
-function routeSeed(start, target, id, max, len){
+function routeSeed(start, target, id, min, max, len){
 
+    min = min?min:0
     len = len?len:10;
     max = max?max:40;
 
@@ -51,10 +53,10 @@ function routeSeed(start, target, id, max, len){
             var t = stack.pop();
             Math.seedrandom(t[0] + clone);
             var values = [];
-            for(let i = 0; i < max + 14; i++){
+            for(let i = 0; i < max + 14 + min; i++){
                 values.push(Math.random());
             }
-            for(let i = 10; i < max + 10; i++){
+            for(let i = 10 + min; i < max + 10 + min; i++){
                 var next = makeseed(values, i);
                 if(next == target){
                     out.innerHTML = t[1].concat([i]);
