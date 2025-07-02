@@ -39,7 +39,7 @@ function makeseed(i, id) {
 }
 function routeSeed(start, target, id, min, max, len){
 
-    min = min?min:0
+    min = min?min:10;
     len = len?len:10;
     max = max?max:40;
 
@@ -53,10 +53,10 @@ function routeSeed(start, target, id, min, max, len){
             var t = stack.pop();
             Math.seedrandom(t[0] + clone);
             var values = [];
-            for(let i = 0; i < max + 14 + min; i++){
+            for(let i = 0; i < max + 4 + min; i++){
                 values.push(Math.random());
             }
-            for(let i = 10 + min; i < max + 10 + min; i++){
+            for(let i = min; i < max + min; i++){
                 var next = makeseed(values, i);
                 if(next == target){
                     out.innerHTML = t[1].concat([i]);
